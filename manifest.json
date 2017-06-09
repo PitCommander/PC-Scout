@@ -1,6 +1,6 @@
 {
-  "name": "PC-Scout",
-  "short_name": "PC-Scout",
+  "name": "PC-SCOUT",
+  "short_name": "PC-SCOUT",
   "start_url": "/?homescreen=1",
   "display": "standalone",
   "theme_color": "#d35401",

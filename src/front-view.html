@@ -31,19 +31,19 @@
         color: white;
       }
 
-      .cardContain {
+      .cardOuter {
         @apply(--layout-horizontal);
         @apply(--layout-flex);
         @apply(--layout-wrap);
+        @apply(--layout-around-justified);
       }
     </style>
-
-    <div class="card">
-      <h2>Next match: [[nextMatch]]</h2>
-      <h3>Scheduled time: [[schedTime]]</h3>
-      <h3>Predicted time: [[predTime]]</h3>
-    </div>
-    <div class="cardContain">
+    <div class="cardOuter">
+      <div class="small-card">
+        <h2>Next match: [[nextMatch]]</h2>
+        <h3>Scheduled time: [[schedTime]]</h3>
+        <h3>Predicted time: [[predTime]]</h3>
+      </div>
       <div class$="small-card [[allyColor]]">
         <h2>Allies</h2>
         <h3>[[allies]]</h3>

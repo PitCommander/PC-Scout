@@ -1,11 +1,17 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/my-app.html",
+  "shell": "src/scout-app.html",
   "fragments": [
-    "src/my-view1.html",
-    "src/my-view2.html",
-    "src/my-view3.html",
-    "src/my-view404.html"
+    "src/front-view.html",
+    "src/auto-view.html",
+    "src/data-view.html",
+    "src/pit-view.html",
+    "src/pit-scout-view.html",
+    "src/schedule-view.html",
+    "src/stand-view.html",
+    "src/tele-view.html",
+    "src/chat-view.html",
+    "src/error-view.html"
   ],
   "sourceGlobs": [
     "src/**/*",
