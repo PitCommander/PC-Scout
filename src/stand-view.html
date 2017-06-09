@@ -4,6 +4,7 @@
 <link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="../bower_components/vaadin-combo-box/vaadin-combo-box-light.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="scouting-page.html">
 
 <dom-module id="stand-view">
   <template>
@@ -26,22 +27,29 @@
         --paper-toggle-button-unchecked-button-color: var(--paper-blue-500);
         --paper-toggle-button-unchecked-ink-color: var(--paper-blue-500);
       }
+
+      .bumperToggle {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+        @apply(--layout-center);
+      }
+
+      .bumperToggle span {
+        padding-top: 5px;
+        padding-right: 10px;
+      }
     </style>
 
-    <div class="card">
-      <h1>Stand Scouting</h1>
+    <scouting-page name="Stand Scouting" first next="auto">
       <paper-input id="scout-name" label="Scout Name"></paper-input>
       <vaadin-combo-box-light id="" attr-for-value="value" items="[[teams]]">
         <paper-input label="Team Number" class="input" type="number" min="1" max="9999" auto-validate></paper-input>
       </vaadin-combo-box-light>
       <paper-input id="match-number" type="number" min="1" max="200" label="Match Number" auto-validate></paper-input>
-      <paper-toggle-button>Bumper Color</paper-toggle-button>
-      <div class="buttonHolder">
-        <paper-button raised>Prev</paper-button>
-        <div class="nextButton">
-          <paper-button raised on-tap="advance">Next</paper-button>
-        </div>
-      </div>
+      <div class="bumperToggle">
+        <span>Bumper Color:</span>
+        <paper-toggle-button checked="{{toggled}}" id="bumperColor">[[bumperColor]]</paper-toggle-button>
+    </scouting-page>
     </div>
   </template>
 
@@ -52,11 +60,22 @@
         teams: {
           type: Array,
           value: []
+        },
+
+        bumperColor: {
+          type: String,
+          value: "BLUE"
+        },
+
+        toggled: {
+          type: Boolean,
+          value: false,
+          observer: "_colorControl"
         }
       },
 
-      advance: function () {
-        document.querySelector('scout-app').page = 'auto';
+      _colorControl: function () {
+        this.bumperColor = this.toggled ? "RED" : "BLUE";
       }
     });
   </script>

@@ -1,9 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="scouting-page.html">
-<link rel="import" href="timer-element.html">
 
-<dom-module id="auto-view">
+<dom-module id="post-view">
   <template>
     <style include="shared-styles">
       :host {
@@ -12,14 +11,14 @@
       }
     </style>
 
-    <scouting-page name="Autonomous" prev="stand" next="tele">
-      <timer-element label="Testing timer"></timer-element>
+    <scouting-page name="Post Match" prev="tele" last>
+      <h2>End of match</h2>
     </scouting-page>
   </template>
 
   <script>
     Polymer({
-      is: 'auto-view',
+      is: 'post-view',
     });
   </script>
 </dom-module>

@@ -59,10 +59,12 @@
       <app-drawer id="drawer">
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="front" href="/front">Front Page</a>
           <a name="stand" href="/stand">Stand Scout</a>
           <a name="pit-scout" href="/pit-scout">Pit Scout</a>
           <a name="data" href="/data">Scouting Data</a>
-          <a name="pit" href="/pit">Pit Data</a>
+          <a name="pit" href="/pit">Pit Status</a>
+          <a name="chat" href="/chat">Chat</a>
         </iron-selector>
       </app-drawer>
 
@@ -77,12 +79,15 @@
         </app-header>
 
         <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="error" role="main">
+          <front-view name="front"></front-view>
           <stand-view name="stand"></stand-view>
           <data-view name="data"></data-view>
           <pit-view name="pit"></pit-view>
           <pit-scout-view name="pit-scout"></pit-scout-view>
           <error-view name="error"></error-view>
           <auto-view name="auto"></auto-view>
+          <tele-view name="tele"></tele-view>
+          <post-view name="post"></post-view>
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
@@ -105,7 +110,7 @@
       ],
 
       _routePageChanged: function (page) {
-        this.page = page || 'stand';
+        this.page = page || 'front';
 
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();
