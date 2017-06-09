@@ -31,7 +31,9 @@
       }
       
       .drawer-list {
+        font-size: 20px;
         margin: 0 20px;
+        text-transform: uppercase;
       }
       
       .drawer-list a {
@@ -58,6 +60,7 @@
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="stand" href="/stand">Stand Scout</a>
+          <a name="pit-scout" href="/pit-scout">Pit Scout</a>
           <a name="data" href="/data">Scouting Data</a>
           <a name="pit" href="/pit">Pit Data</a>
         </iron-selector>
@@ -77,6 +80,7 @@
           <stand-view name="stand"></stand-view>
           <data-view name="data"></data-view>
           <pit-view name="pit"></pit-view>
+          <pit-scout-view name="pit-scout"></pit-scout-view>
           <error-view name="error"></error-view>
         </iron-pages>
       </app-header-layout>
