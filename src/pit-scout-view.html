@@ -1,4 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/granite-file-reader/granite-file-reader.html">
+<link rel="import" href="../bower_components/iron-icons/image-icons.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="pit-scout-view">
@@ -8,16 +10,35 @@
         display: block;
         padding: 10px;
       }
+
+      paper-button {
+        background-color: whitesmoke;
+        padding: 10px;
+        border-radius: 5px;
+      }
     </style>
 
     <div class="card">
       <h1>Pit Scouting</h1>
+      <granite-file-reader accept="image/*;capture=camera" readAs="binary">
+        <paper-button raised>
+          <iron-icon icon="image:camera-alt"></iron-icon>
+          Robot Picture
+        </paper-button>
+      </granite-file-reader>
     </div>
   </template>
 
   <script>
     Polymer({
       is: 'pit-scout-view',
+      listeners: {
+        'file-read': 'handleFiles'
+      },
+
+      handleFiles: function (e) {
+        console.log("file read in");
+      }
     });
   </script>
 </dom-module>
