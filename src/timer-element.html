@@ -29,51 +29,56 @@
         active: {
           type: Boolean,
           value: false,
-          observer: "start"
+          reflectToAttribute: true,
+          notify: true,
+          observer: "startTimer"
         },
         label: {
           type: String,
           value: "Timer"
         },
-        currentTime: {
-          type: Number,
-          value: 0
-        },
         elapsedTime: {
           type: String,
-          value: "0.000"
+          value: "0.00"
         },
         buttonText: {
           type: String,
           value: "Start"
+        },
+        initializeTime: {
+          type: Boolean,
+          value: true
         }
       },
 
       reset: function () {
-        this.activeTime = 0;
-        this.currentTime = 0;
-        this.elapsedTime = "0.000";
+        this.startTime = 0;
+        this.elapsedTime = "0.00";
         this.active = false;
+        this.initializeTime = true;
       },
 
-      start: function () {
+      startTimer: function () {
+        if (this.initializeTime) {
+          this.startTime = performance.now() / 1000;
+          this.initializeTime = false;
+        }
+
         if (this.active) {
           this.buttonText = "Pause";
-          console.log(this.buttonText);
-          window.requestAnimationFrame(this.runTimer.bind(this));
+          window.requestAnimationFrame(this._runTimer.bind(this));
         } else {
           this.buttonText = "Start";
         }
       },
 
-      runTimer: function (timestamp) {
-        if (this.active) {
-          this.currentTime = performance.now() / 1000;
-          this.elapsedTime = (this.currentTime - this.startTime).toFixed(2);
-          window.requestAnimationFrame(this.runTimer.bind(this));
-        } else {
+      _runTimer: function (timestamp) {
+        if (!this.active) {
           return;
         }
+        var now = timestamp / 1000;
+        this.elapsedTime = (now - this.startTime).toFixed(2);
+        window.requestAnimationFrame(this._runTimer.bind(this));
       }
     });
   </script>
