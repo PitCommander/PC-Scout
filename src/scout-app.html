@@ -11,6 +11,8 @@
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="my-icons.html">
+<link rel="import" href="schedule-view.html">
+
 
 <dom-module id="scout-app">
   <template>
@@ -54,15 +56,18 @@
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
 
-    <app-drawer-layout fullbleed>
+    <app-drawer-layout fullbleed force-narrow>
       <!-- Drawer content -->
-      <app-drawer id="drawer">
-        <app-toolbar>Menu</app-toolbar>
+      <app-drawer id="drawer" swipe-open>
+        <app-toolbar>
+          MENU
+        </app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="front" href="/front">Front Page</a>
           <a name="stand" href="/stand">Stand Scout</a>
           <a name="pit-scout" href="/pit-scout">Pit Scout</a>
           <a name="data" href="/data">Scouting Data</a>
+          <a name="schedule" href="/schedule">Match Schedule</a>
           <a name="pit" href="/pit">Pit Status</a>
           <a name="chat" href="/chat">Chat</a>
         </iron-selector>
@@ -73,8 +78,8 @@
 
         <app-header condenses reveals effects="waterfall">
           <app-toolbar>
-            <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title>PC-Scout</div>
+            <paper-icon-button icon="my-icons:snake" drawer-toggle></paper-icon-button>
+            <div main-title>PC-SCOUT</div>
           </app-toolbar>
         </app-header>
 
@@ -88,6 +93,7 @@
           <auto-view name="auto"></auto-view>
           <tele-view name="tele"></tele-view>
           <post-view name="post"></post-view>
+          <schedule-view name="schedule"></schedule-view>
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>

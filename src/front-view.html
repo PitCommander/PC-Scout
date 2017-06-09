@@ -8,16 +8,92 @@
         display: block;
         padding: 10px;
       }
+
+      h2 {
+        text-align: center;
+        margin: 0px;
+        padding: 0px;
+      }
+
+      h3 {
+        text-align: center;
+        margin: 0px;
+        padding: 0px;
+      }
+
+      .RED {
+        background-color: crimson;
+        color: white;
+      }
+
+      .BLUE {
+        background-color: cornflowerblue;
+        color: white;
+      }
+
+      .cardContain {
+        @apply(--layout-horizontal);
+        @apply(--layout-flex);
+        @apply(--layout-wrap);
+      }
     </style>
 
     <div class="card">
-      <h1>Front Page</h1>
+      <h2>Next match: [[nextMatch]]</h2>
+      <h3>Scheduled time: [[schedTime]]</h3>
+      <h3>Predicted time: [[predTime]]</h3>
+    </div>
+    <div class="cardContain">
+      <div class$="small-card [[allyColor]]">
+        <h2>Allies</h2>
+        <h3>[[allies]]</h3>
+      </div>
+      <div class$="small-card [[oppoColor]]">
+        <h2>Opponents</h2>
+        <h3>[[oppo]]</h3>
+      </div>
     </div>
   </template>
 
   <script>
     Polymer({
       is: 'front-view',
+      properties: {
+        nextMatch: {
+          type: String,
+          value: "QM 1"
+        },
+
+        allies: {
+          type: String,
+          value: "3072, 3361"
+        },
+
+        oppo: {
+          type: String,
+          value: "2363, 1086, 1610"
+        },
+
+        schedTime: {
+          type: String,
+          value: "9:15 AM"
+        },
+
+        predTime: {
+          type: String,
+          value: "9:20 AM"
+        },
+
+        allyColor: {
+          type: String,
+          value: "RED"
+        },
+
+        oppoColor: {
+          type: String,
+          value: "BLUE"
+        }
+      }
     });
   </script>
 </dom-module>

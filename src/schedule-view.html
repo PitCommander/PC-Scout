@@ -1,0 +1,214 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-data-table/iron-data-table.html">
+<link rel="import" href="shared-styles.html">
+<dom-module id="schedule-view">
+  <template>
+    <style include="shared-styles">
+    :host {
+        display: block;
+        padding: 10px;
+      }
+
+      h2 {
+        text-align: center;
+        font-size: 30px;
+        margin: 0px;
+        padding: 0px;
+      }
+
+      iron-data-table {
+        --iron-data-table-row-odd: {
+          background-color: whitesmoke;
+        }
+      }
+
+      @media(max-width: 800px) {
+        h2 {
+          font-size: 30px;
+        }
+        iron-data-table {
+          height: 68vh;
+        }
+      }
+
+      @media(min-width: 801px) {
+        h2 {
+          font-size: 40px;
+        }
+        iron-data-table {
+          line-height: 1.14;
+          font-size: 35px;
+          height: 68vh;
+          --iron-data-table-row: {
+            height: 40px;
+          }
+          --iron-data-table-header: {
+            height: 48px;
+          }
+        }
+        .th {
+          width: 100%;
+          text-align: center;
+          height: 40px;
+        }
+      }
+
+      .cellPadder {
+        padding: 0px 1px 0px 0px;
+        height: 40px;
+      }
+
+      .RED {
+        font-weight: 100;
+        color: white;
+        background-color: crimson;
+        width: 100%;
+        text-align: center;
+      }
+
+      .BLUE {
+        font-weight: 100;
+        color: white;
+        background-color: cornflowerblue;
+        width: 100%;
+        text-align: center;
+      }
+
+      .redWin {
+        font-weight: 900;
+        color: white;
+        background-color: crimson;
+        width: 100%;
+        text-align: center;
+      }
+
+      .blueWin {
+        font-weight: 900;
+        color: white;
+        background-color: cornflowerblue;
+        width: 100%;
+        text-align: center;
+      }
+
+      .WIN {
+        font-weight: 900;
+        background-color: forestgreen;
+        color: white;
+        width: 100%;
+        text-align: center;
+      }
+
+      .LOSS {
+        font-weight: 100;
+        background-color: black;
+        color: white;
+        width: 100%;
+        text-align: center;
+      }
+
+      .TIE {
+        font-weight: 300;
+        background-color: yellow;
+        color: black;
+        width: 100%;
+        text-align: center;
+      }
+    }
+    </style>
+
+    <div class="card">
+      <h2>Record: {{record}}</h2>
+      <iron-data-table id="grid" items="[[data]]">
+        <data-table-column name="Match" flex="1" width="40px">
+          <template is="header">
+            <div class="th">Match</div>
+          </template>
+          <template>
+            <div class="th">[[item.matchNumber]]</div>
+          </template>
+        </data-table-column>
+        <data-table-column name="Scheduled" flex="1" width="35px">
+          <template is="header">
+            <div class="th">Time</div>
+          </template>
+          <template>
+            <div class="th">[[item.schedString]]</div>
+          </template>
+        </data-table-column>
+        <data-table-column name="Allies" flex="2" width="30px">
+          <template is="header">
+            <div class="th">Ally</div>
+          </template>
+          <template>
+            <div class$="[[item.bumperColor]]">[[item.allyString]]</div>
+          </template>
+        </data-table-column>
+        <data-table-column name="Opponents" flex="3" width="40px">
+          <template is="header">
+            <div class="th">Oppo</div>
+          </template>
+          <template>
+            <div class$="{{oppoColor(item.bumperColor)}}">[[item.oppoString]]</div>
+          </template>
+        </data-table-column>
+        <data-table-column name="Red Score" flex="1" width="30px">
+          <template is="header">
+            <div class="th">Red</div>
+          </template>
+          <template>
+            <div class$="{{redCalc(item.redScore, item.blueScore)}}">[[item.redScore]]</div>
+          </template>
+        </data-table-column>
+        <data-table-column name="Blue Score" flex="1" width="30px">
+          <template is="header">
+            <div class="th">Blue</div>
+          </template>
+          <template>
+            <div class$="{{blueCalc(item.redScore, item.blueScore)}}">[[item.blueScore]]</div>
+          </template>
+        </data-table-column>
+        <data-table-column name="Result" flex="1" width="40px">
+          <template is="header ">
+            <div class="th ">Result</div>
+          </template>
+          <template>
+            <div class$="[[item.result]] ">[[item.result]]</div>
+          </template>
+        </data-table-column>
+      </iron-data-table>
+    </div>
+
+    <script>
+      document.querySelector('#grid').beforeCellBind = function (data, cell) {
+        cell.classList.add('cellPadder');
+      }
+    </script>
+  </template>
+  <script>
+    Polymer({
+      is: 'schedule-view',
+      properties: {
+        record: {
+          type: String,
+          value: '- - -'
+        },
+        data: {
+          type: Array,
+          value: [],
+        }
+      },
+
+      oppoColor: function (color) {
+        return (color === 'RED') ? 'BLUE' : 'RED';
+      },
+
+      redCalc: function (red, blue) {
+        return (red >= blue) ? 'redWin' : 'RED';
+      },
+
+      blueCalc: function (red, blue) {
+        return (blue >= red) ? 'blueWin' : 'BLUE';
+      }
+    });
+  </script>
+</dom-module>
