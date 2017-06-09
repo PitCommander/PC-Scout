@@ -1,0 +1,80 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="timer-element">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+    </style>
+
+    <div>
+      <paper-button raised on-tap="reset">Reset</paper-button>
+      <paper-button toggles raised active="{{active}}">[[buttonText]]</paper-button>
+      [[label]]: [[elapsedTime]]
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'timer-element',
+      properties: {
+        startTime: {
+          type: Number,
+          value: 0
+        },
+        active: {
+          type: Boolean,
+          value: false,
+          observer: "start"
+        },
+        label: {
+          type: String,
+          value: "Timer"
+        },
+        currentTime: {
+          type: Number,
+          value: 0
+        },
+        elapsedTime: {
+          type: String,
+          value: "0.000"
+        },
+        buttonText: {
+          type: String,
+          value: "Start"
+        }
+      },
+
+      reset: function () {
+        this.activeTime = 0;
+        this.currentTime = 0;
+        this.elapsedTime = "0.000";
+        this.active = false;
+      },
+
+      start: function () {
+        if (this.active) {
+          this.buttonText = "Pause";
+          console.log(this.buttonText);
+          window.requestAnimationFrame(this.runTimer.bind(this));
+        } else {
+          this.buttonText = "Start";
+        }
+      },
+
+      runTimer: function (timestamp) {
+        if (this.active) {
+          this.currentTime = performance.now() / 1000;
+          this.elapsedTime = (this.currentTime - this.startTime).toFixed(2);
+          window.requestAnimationFrame(this.runTimer.bind(this));
+        } else {
+          return;
+        }
+      }
+    });
+  </script>
+</dom-module>

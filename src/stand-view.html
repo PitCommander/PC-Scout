@@ -13,24 +13,6 @@
         padding: 10px;
       }
 
-      .pageButton {}
-
-      .buttonHolder {
-        padding-top: 15px;
-        @apply(--layout-horizontal);
-        @apply(--layout-flex);
-      }
-
-      .nextButton {
-        @apply(--layout-horizontal);
-        @apply(--layout-flex);
-        @apply(--layout-end-justified);
-      }
-
-      .prevButton {
-        @apply(--layout-flex);
-      }
-
       paper-input {
         --paper-input-container-focus-color: var(--app-primary-color);
       }
@@ -55,9 +37,9 @@
       <paper-input id="match-number" type="number" min="1" max="200" label="Match Number" auto-validate></paper-input>
       <paper-toggle-button>Bumper Color</paper-toggle-button>
       <div class="buttonHolder">
-        <paper-button raised class="pageButton">Prev</paper-button>
+        <paper-button raised>Prev</paper-button>
         <div class="nextButton">
-          <paper-button raised class="pageButton">Next</paper-button>
+          <paper-button raised on-tap="advance">Next</paper-button>
         </div>
       </div>
     </div>
@@ -71,6 +53,10 @@
           type: Array,
           value: []
         }
+      },
+
+      advance: function () {
+        document.querySelector('scout-app').page = 'auto';
       }
     });
   </script>
