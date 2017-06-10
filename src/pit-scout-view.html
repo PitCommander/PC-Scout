@@ -20,9 +20,11 @@
 
     <div class="card">
       <h1>Pit Scouting</h1>
-      <granite-file-reader accept="image/*;capture=camera" readAs="binary">
+      <img id="test" src="">
+      <img id="test2" src="">
+      <granite-file-reader accept="image/*;capture=camera" read-as="dataURL">
         <paper-button raised>
-          <iron-icon icon="image:camera-alt"></iron-icon>
+          <iron-icon icon=" image:camera-alt "></iron-icon>
           Robot Picture
         </paper-button>
       </granite-file-reader>
@@ -32,12 +34,19 @@
   <script>
     Polymer({
       is: 'pit-scout-view',
+      properties: {
+        image: {
+          type: String,
+          value: ""
+        }
+      },
       listeners: {
         'file-read': 'handleFiles'
       },
 
       handleFiles: function (e) {
-        console.log("file read in");
+        var img = document.getElementById("test");
+        img.src = e.detail;
       }
     });
   </script>
