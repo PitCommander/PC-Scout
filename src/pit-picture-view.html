@@ -2,8 +2,9 @@
 <link rel="import" href="../bower_components/granite-file-reader/granite-file-reader.html">
 <link rel="import" href="../bower_components/iron-icons/image-icons.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="scouting-page.html">
 
-<dom-module id="pit-scout-view">
+<dom-module id="pit-picture-view">
   <template>
     <style include="shared-styles">
       :host {
@@ -23,11 +24,17 @@
         @apply(--layout-center);
         @apply(--layout-center-justified);
       }
-    </style>
 
-    <div class="card" id="card">
-      <h1>Pit Scouting</h1>
-      <canvas id="canvas" width="0" height="0" src=""></canvas>
+      .canvas {
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--layout-center-justified);
+      }
+    </style>
+    <scouting-page id="card" name="Pit Scouting - Picture" prev="pit-intro" next="pit-last">
+      <div class="canvas">
+        <canvas id="canvas"></canvas>
+      </div>
       <div class=buttons>
         <paper-button raised>
           <iron-icon icon="image:rotate-left" on-tap="rotateLeft"></iron-icon>
@@ -41,12 +48,12 @@
           <iron-icon icon="image:rotate-right" on-tap="rotateRight"></iron-icon>
         </paper-button>
       </div>
-    </div>
+    </scouting-page>
   </template>
 
   <script>
     Polymer({
-      is: 'pit-scout-view',
+      is: 'pit-picture-view',
       properties: {
         image: {
           type: String,
@@ -72,6 +79,14 @@
 
       listeners: {
         'file-read': 'handleFiles'
+      },
+
+      ready: function () {
+        var max = this.$.card.offsetWidth - 80;
+        var picView = this;
+        this.getDataURL("../images/placeholder.png", function (data) {
+          picView.scaleImage(data, max, max, picView.drawImage)
+        });
       },
 
       handleFiles: function (e) {
@@ -109,10 +124,10 @@
       },
 
       drawImage: function (data) {
-        var pitScout = document.querySelector('pit-scout-view');
-        var canvas = pitScout.$.canvas;
+        var picView = document.querySelector('pit-picture-view');
+        var canvas = picView.$.canvas;
 
-        pitScout.scaledData = data;
+        picView.scaledData = data;
 
         var ctx = canvas.getContext('2d')
         var img = new Image;
@@ -210,7 +225,25 @@
         this.image = "";
         this.scaledData = "";
         this.angle = 0;
+      },
+
+      getDataURL: function (url, callback) {
+        var image = new Image();
+
+        image.onload = function () {
+          var canvas = document.createElement('canvas');
+          canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+          canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+
+          canvas.getContext('2d').drawImage(this, 0, 0);
+
+          // ... or get as Data URI
+          callback(canvas.toDataURL('image/png'));
+        };
+
+        image.src = url;
       }
+
     });
   </script>
 </dom-module>
