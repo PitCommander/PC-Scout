@@ -14,20 +14,34 @@
       paper-button {
         background-color: whitesmoke;
         padding: 10px;
+        margin: 5px;
         border-radius: 5px;
+      }
+
+      .buttons {
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--layout-center-justified);
       }
     </style>
 
-    <div class="card">
+    <div class="card" id="card">
       <h1>Pit Scouting</h1>
-      <img id="test" src="">
-      <img id="test2" src="">
-      <granite-file-reader accept="image/*;capture=camera" read-as="dataURL">
+      <canvas id="canvas" width="0" height="0" src=""></canvas>
+      <div class=buttons>
         <paper-button raised>
-          <iron-icon icon=" image:camera-alt "></iron-icon>
-          Robot Picture
+          <iron-icon icon="image:rotate-left" on-tap="rotateLeft"></iron-icon>
         </paper-button>
-      </granite-file-reader>
+        <granite-file-reader accept="image/*;capture=camera" read-as="dataURL">
+          <paper-button raised>
+            <iron-icon icon="image:camera-alt"></iron-icon>
+          </paper-button>
+        </granite-file-reader>
+        <paper-button raised>
+          <iron-icon icon="image:rotate-right" on-tap="rotateRight"></iron-icon>
+        </paper-button>
+      </div>
+      Base: [[image.length]], Scaled: [[scaledData.length]], Final: [[finalData.length]]
     </div>
   </template>
 
@@ -38,15 +52,151 @@
         image: {
           type: String,
           value: ""
+        },
+
+        scaledData: {
+          type: String,
+          value: ""
+        },
+
+        angle: {
+          type: Number,
+          value: 0
+        },
+
+        finalData: {
+          type: String,
+          value: ""
         }
       },
+
       listeners: {
         'file-read': 'handleFiles'
       },
 
       handleFiles: function (e) {
-        var img = document.getElementById("test");
-        img.src = e.detail;
+        this.image = e.detail;
+
+        var max = this.$.card.offsetWidth - 40;
+        this.scaleImage(this.image, max, max, this.drawImage);
+        this.prepData();
+      },
+
+      scaleImage: function (data, maxWidth, maxHeight, callback) {
+        maxWidth = maxWidth || 640;
+        maxHeight = maxHeight || 640;
+
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+
+        var maxW = maxWidth;
+        var maxH = maxHeight;
+
+        var img = new Image;
+        img.onload = function () {
+          var iw = img.width;
+          var ih = img.height;
+          var scale = Math.min((maxW / iw), (maxH / ih));
+          var iwScaled = iw * scale;
+          var ihScaled = ih * scale;
+          canvas.width = iwScaled;
+          canvas.height = ihScaled;
+          ctx.drawImage(img, 0, 0, iwScaled, ihScaled);
+          callback(canvas.toDataURL());
+        };
+
+        img.src = data;
+
+      },
+
+      drawImage: function (data) {
+        var pitScout = document.querySelector('pit-scout-view');
+        var canvas = pitScout.$.canvas;
+
+        pitScout.scaledData = data;
+
+        var ctx = canvas.getContext('2d')
+        var img = new Image;
+        img.onload = function () {
+          var iw = img.width;
+          var ih = img.height;
+          canvas.width = iw;
+          canvas.height = ih;
+          ctx.drawImage(img, 0, 0, iw, ih);
+        }
+        img.src = data;
+      },
+
+      rotateImage: function (data, degrees, callback) {
+        var canvas = document.createElement("canvas");
+        var ctx = canvas.getContext("2d");
+        var image = new Image;
+        image.onload = function () {
+          if (degrees == 90 || degrees == 270) {
+            canvas.width = image.height;
+            canvas.height = image.width;
+          } else {
+            canvas.width = image.width;
+            canvas.height = image.height;
+          }
+
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          if (degrees == 90 || degrees == 270) {
+            ctx.translate(image.height / 2, image.width / 2);
+          } else {
+            ctx.translate(image.width / 2, image.height / 2);
+          }
+          ctx.rotate(degrees * Math.PI / 180);
+          ctx.drawImage(image, -image.width / 2, -image.height / 2);
+          callback(canvas.toDataURL());
+        }
+        image.src = data;
+      },
+
+      rotateLeft: function () {
+        if (this.angle == 0)
+          this.angle = 270;
+        else
+          this.angle = (this.angle - 90) % 360;
+
+        this.rotateImage(this.scaledData, this.angle, this.drawImage);
+      },
+
+      rotateRight: function () {
+        this.angle = (this.angle + 90) % 360;
+
+        this.rotateImage(this.scaledData, this.angle, this.drawImage);
+      },
+
+      downSampleImage: function (data, quality, callback) {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        var img = new Image;
+        img.onload = function () {
+          var iw = img.width;
+          var ih = img.height;
+          canvas.width = iw;
+          canvas.height = ih;
+          ctx.drawImage(img, 0, 0, iw, ih);
+          callback(canvas.toDataURL("image/jpeg", quality));
+        };
+
+        img.src = data;
+      },
+
+      prepData: function () {
+        var pit = document.querySelector('pit-scout-view');
+        pit.rotateImage(pit.image, pit.angle, function (data) {
+          pit.scaleImage(data, 640, 480, function (data) {
+            pit.downSampleImage(data, .75, function (data) {
+              pit.finalData = data;
+            })
+          })
+        })
+      },
+
+      sendData: function () {
+        //implement sending here.
       }
     });
   </script>
