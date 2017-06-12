@@ -41,7 +41,6 @@
           <iron-icon icon="image:rotate-right" on-tap="rotateRight"></iron-icon>
         </paper-button>
       </div>
-      Base: [[image.length]], Scaled: [[scaledData.length]], Final: [[finalData.length]]
     </div>
   </template>
 
@@ -79,7 +78,6 @@
 
         var max = this.$.card.offsetWidth - 40;
         this.scaleImage(this.image, max, max, this.drawImage);
-        this.prepData();
       },
 
       scaleImage: function (data, maxWidth, maxHeight, callback) {
