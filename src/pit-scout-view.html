@@ -65,7 +65,8 @@
 
         finalData: {
           type: String,
-          value: ""
+          value: "",
+          observer: 'sendData'
         }
       },
 
@@ -194,7 +195,21 @@
       },
 
       sendData: function () {
-        //implement sending here.
+        if (this.finalData != "") {
+          //implement sending here.
+        }
+      },
+
+      resetView: function () {
+        var canvas = this.$.canvas;
+        canvas.src = "";
+        canvas.width = 0;
+        canvas.height = 0;
+        canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+        this.finalData = "";
+        this.image = "";
+        this.scaledData = "";
+        this.angle = 0;
       }
     });
   </script>
