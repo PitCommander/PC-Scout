@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/granite-file-reader/granite-file-reader.html">
 <link rel="import" href="../bower_components/iron-icons/image-icons.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="scouting-page.html">
 
@@ -14,27 +15,34 @@
 
       paper-button {
         background-color: whitesmoke;
-        padding: 10px;
-        margin: 5px;
+        height: 50px;
+        width: 50px;
         border-radius: 5px;
+        min-width: 20px;
       }
 
       .buttons {
         @apply(--layout-horizontal);
         @apply(--layout-center);
         @apply(--layout-center-justified);
+        padding-bottom: 10px;
       }
 
       .canvas {
         @apply(--layout-horizontal);
         @apply(--layout-center);
         @apply(--layout-center-justified);
+        padding-bottom: 10px;
+      }
+
+      granite-file-reader {
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--layout-center-justified);
       }
     </style>
-    <scouting-page id="card" name="Pit Scouting - Picture" prev="pit-intro" next="pit-last">
-      <div class="canvas">
-        <canvas id="canvas"></canvas>
-      </div>
+    <scouting-page id="card" name="Pit Scouting - Picture" prev="pit-specs" next="pit-submit">
+
       <div class=buttons>
         <paper-button raised>
           <iron-icon icon="image:rotate-left" on-tap="rotateLeft"></iron-icon>
@@ -47,6 +55,9 @@
         <paper-button raised>
           <iron-icon icon="image:rotate-right" on-tap="rotateRight"></iron-icon>
         </paper-button>
+      </div>
+      <div class="canvas">
+        <canvas id="canvas"></canvas>
       </div>
     </scouting-page>
   </template>
@@ -82,7 +93,7 @@
       },
 
       ready: function () {
-        var max = this.$.card.offsetWidth - 80;
+        var max = this.$.card.offsetWidth - 100;
         var picView = this;
         this.getDataURL("../images/placeholder.png", function (data) {
           picView.scaleImage(data, max, max, picView.drawImage)
@@ -232,8 +243,8 @@
 
         image.onload = function () {
           var canvas = document.createElement('canvas');
-          canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
-          canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+          canvas.width = this.naturalWidth;
+          canvas.height = this.naturalHeight;
 
           canvas.getContext('2d').drawImage(this, 0, 0);
 

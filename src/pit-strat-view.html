@@ -2,7 +2,7 @@
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="scouting-page.html">
 
-<dom-module id="post-view">
+<dom-module id="pit-strat-view">
   <template>
     <style include="shared-styles">
       :host {
@@ -11,14 +11,14 @@
       }
     </style>
 
-    <scouting-page name="Stand Scouting - Post Match" prev="tele" last>
-      <h2>End of match</h2>
+    <scouting-page name="Pit Scouting - Strategy" prev="pit-intro" next="pit-specs">
+      Team strategy information should go here.
     </scouting-page>
   </template>
 
   <script>
     Polymer({
-      is: 'post-view',
+      is: 'pit-strat-view',
     });
   </script>
 </dom-module>
