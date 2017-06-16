@@ -19,6 +19,36 @@
   <script>
     Polymer({
       is: 'pit-submit-view',
+
+      listeners: {
+        'scouting-submit': 'logSubmit'
+      },
+      logSubmit: function (e) {
+        var type = e.detail.name.indexOf("Pit") != -1 ? "PIT" : "STAND";
+        console.log(type);
+
+        if (type === "PIT") {
+          this.sendPitScout();
+          this.resetPitScout();
+        }
+      },
+
+      resetPitScout: function () {
+        var app = document.querySelector('scout-app');
+        var pitIntro = document.querySelector('pit-intro-view');
+        var pitStrat = document.querySelector('pit-strat-view');
+        var pitSpecs = document.querySelector('pit-specs-view');
+        var pitPic = document.querySelector('pit-picture-view');
+        var pitSubmit = document.querySelector('pit-submit-view');
+
+        app.page = "pit-intro"
+        pitIntro.$.scoutName.value = "";
+        pitIntro.$.teamNumber.value = "";
+      },
+
+      sendPitScout: function () {
+        console.log("sending data");
+      }
     });
   </script>
 </dom-module>

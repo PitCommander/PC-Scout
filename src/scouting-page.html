@@ -34,7 +34,7 @@
           <paper-button raised on-tap="advance" hidden="{{last}}">Next</paper-button>
         </div>
         <div class="sendButton">
-          <paper-button raised hidden="{{!last}}">Send Data</paper-button>
+          <paper-button raised hidden="{{!last}}" on-tap="fireSubmit">Send Data</paper-button>
         </div>
       </div>
 
@@ -77,6 +77,12 @@
 
       retreat: function () {
         document.querySelector('scout-app').page = this.prev;
+      },
+
+      fireSubmit: function (e, detail) {
+        this.fire('scouting-submit', {
+          name: this.name
+        });
       }
     });
   </script>
