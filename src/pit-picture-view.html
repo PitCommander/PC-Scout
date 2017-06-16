@@ -210,12 +210,10 @@
       },
 
       prepData: function () {
-        var pit = document.querySelector('pit-scout-view');
+        var pit = document.querySelector('pit-picture-view');
         pit.rotateImage(pit.image, pit.angle, function (data) {
           pit.scaleImage(data, 640, 480, function (data) {
-            pit.downSampleImage(data, .75, function (data) {
-              pit.finalData = data;
-            })
+            pit.finalData = data;
           })
         })
       },
