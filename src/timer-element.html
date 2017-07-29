@@ -12,41 +12,42 @@
         padding: 0px;
       }
 
-      paper-icon-button {
-        background-color: whitesmoke;
-        border-radius: 20px;
-        margin-right: 2px;
-      }
-
-      paper-icon-button[active] {
-        background-color: var(--app-primary-color);
-        color: white;
-      }
-
       h3 {
         text-align: center;
       }
 
       .timerContainer {
         @apply(--layout-horizontal);
-        @apply(--layout-flex);
+        @apply(--layout-center);
+        @apply(--layout-center-justified);
       }
 
-      .timerText {
-        margin-left: 5px;
+      .timerLabel {
+        padding-right: 20px;
+        width: 100px;
         @apply(--layout-horizontal);
         @apply(--layout-center);
-        @apply(--layout-flex);
+      }
+
+      .timerValue {
+        margin: 5px;
+      }
+
+      paper-icon-button {
+        @apply(--layout-center);
       }
     </style>
 
     <div>
       <div class="timerContainer">
+        <span class="timerLabel">
+          [[label]]:
+        </span>
         <paper-icon-button on-tap="reset" icon="refresh"></paper-icon-button>
-        <paper-icon-button toggles active="{{active}}" icon="[[icon]]"></paper-icon-button>
-        <div class="timerText">
-          [[label]]: [[elapsedTime]]
+        <div class="timerValue">
+          [[elapsedTime]]
         </div>
+        <paper-icon-button toggles active="{{active}}" icon="[[icon]]"></paper-icon-button>
       </div>
     </div>
   </template>

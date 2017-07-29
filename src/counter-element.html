@@ -1,0 +1,49 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="counter-element">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 0px;
+      }
+    </style>
+
+    <div class="baseRow">
+      <span style="padding-right: 20px; width: 100px;">{{label}}:</span>
+      <paper-icon-button icon="icons:remove-circle-outline" on-tap="decrement"></paper-icon-button>
+      <span style="padding: 15px">{{value}}</span>
+      <paper-icon-button icon="icons:add-circle-outline" on-tap="increment"></paper-icon-button>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'counter-element',
+      properties: {
+        label: {
+          type: String,
+          value: ""
+        },
+        value: {
+          type: Number,
+          value: 0,
+          notify: true
+        }
+      },
+
+      decrement: function () {
+        if (this.value > 0) {
+          this.value -= 1;
+        }
+      },
+
+      increment: function () {
+        this.value += 1;
+      }
+    });
+  </script>
+</dom-module>

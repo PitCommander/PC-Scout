@@ -1,6 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="scouting-page.html">
+<link rel="import" href="counter-element.html">
+<link rel="import" href="timer-element.html">
 
 <dom-module id="tele-view">
   <template>
@@ -13,7 +15,20 @@
     </style>
 
     <scouting-page name="Stand Scouting - Teleop" prev="auto" next="post">
-      <h2>testing</h2>
+      <div class="wrappingRow">
+        <counter-element label="Gears Scored"></counter-element>
+        <counter-element label="Gears Dropped"></counter-element>
+        <counter-element label="Fuel Points"></counter-element>
+        <counter-element label="Fouls"></counter-element>
+      </div>
+      <timer-element label="Climbing Time"></timer-element>
+      <paper-dropdown-menu label="Climbing Result" value="{{climbResult}}" dynamic-align>
+        <paper-listbox slot="dropdown-content" selected="0">
+          <paper-item>Did not attempt</paper-item>
+          <paper-item>Failed</paper-item>
+          <paper-item>Success</paper-item>
+        </paper-listbox>
+      </paper-dropdown-menu>
     </scouting-page>
   </template>
 

@@ -27,13 +27,28 @@
         @apply(--layout-center-justified);
       }
 
-      .rowContainer {
+      .wrappingRow {
         margin: 0px;
         padding: 0px;
         @apply(--layout-horizontal);
         @apply(--layout-wrap);
         @apply(--layout-around-justified);
         @apply(--layout-center);
+      }
+
+      .baseRow {
+        margin: 0px;
+        padding: 0px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+      }
+
+      .center {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+        @apply(--layout-center);
+        margin: 0px;
+        padding: 0px;
       }
 
       h1 {
@@ -44,6 +59,31 @@
 
       paper-input {
         --paper-input-container-focus-color: var(--app-primary-color);
+      }
+
+      paper-slider {
+        --paper-slider-knob-color: var(--app-primary-color);
+        --paper-slider-active-color: var(--app-primary-color);
+        --paper-slider-pin-color: var(--app-primary-color);
+      }
+
+      paper-dropdown-menu {
+        --paper-dropdown-menu-color: var(--app-primary-color);
+        --paper-dropdown-menu-focus-color: var(--app-primary-color);
+        --paper-input-container-focus-color: var(--app-primary-color);
+      }
+
+      paper-icon-button {
+        width: 40px;
+        height: 40px;
+        background-color: whitesmoke;
+        border-radius: 20px;
+        margin-right: 2px;
+      }
+
+      paper-icon-button[active] {
+        background-color: var(--app-primary-color);
+        color: white;
       }
     </style>
   </template>

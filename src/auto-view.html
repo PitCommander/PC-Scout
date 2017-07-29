@@ -1,4 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-slider/paper-slider.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="scouting-page.html">
 <link rel="import" href="timer-element.html">
@@ -15,13 +19,27 @@
     </style>
 
     <scouting-page name="Stand Scouting - Auto" prev="stand" next="tele">
-      <div>Gear location...</div>
-      <div class="rowContainer">
+      <paper-dropdown-menu label="Auto Gear Scoring" value="{{autoGear}}">
+        <paper-listbox slot="dropdown-content" selected="0">
+          <paper-item>None</paper-item>
+          <paper-item>Left</paper-item>
+          <paper-item>Center</paper-item>
+          <paper-item>Right</paper-item>
+          <paper-item>2 Gear</paper-item>
+        </paper-listbox>
+      </paper-dropdown-menu>
+      <div class="wrappingRow">
         <toggle-element label="Crossed base line" value="{{baseLine}}"></toggle-element>
         <toggle-element id="fuel" label="Scored auto fuel" value="{{autoFuel}}"></toggle-element>
       </div>
       <template is="dom-if" if="{{autoFuel}}">
-        Shoot ball
+        <div class="center">
+          <toggle-element label="Goal" value="{{fuelGoal}}" no="LOW" yes="HIGH"></toggle-element>
+        </div>
+        <div class="center">
+          <span> Fuel scored</span>
+          <paper-slider min="0" max="60" pin expand editable value="{{autoCount}}"></paper-slider>
+        </div>
       </template>
     </scouting-page>
   </template>
@@ -37,6 +55,22 @@
         autoFuel: {
           type: Boolean,
           value: false
+        },
+
+        autoGear: {
+          type: String,
+          value: "None",
+          notify: true
+        },
+
+        fuelGoal: {
+          type: Boolean,
+          value: true
+        },
+
+        autoCount: {
+          type: Number,
+          value: 0
         }
       }
     });
