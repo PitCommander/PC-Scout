@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/vaadin-combo-box/vaadin-combo-box-light.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="scouting-page.html">
+<link rel="import" href="toggle-element.html">
 
 <dom-module id="stand-view">
   <template>
@@ -10,45 +11,21 @@
       :host {
         display: block;
         padding: 10px;
-      }
-
-      paper-input {
-        --paper-input-container-focus-color: var(--app-primary-color);
-      }
-
-      paper-toggle-button {
-        padding-top: 10px;
-        --paper-toggle-button-checked-bar-color: var(--paper-red-500);
-        --paper-toggle-button-checked-button-color: var(--paper-red-500);
-        --paper-toggle-button-checked-ink-color: var(--paper-red-500);
-        --paper-toggle-button-unchecked-bar-color: var(--paper-blue-500);
-        --paper-toggle-button-unchecked-button-color: var(--paper-blue-500);
-        --paper-toggle-button-unchecked-ink-color: var(--paper-blue-500);
-      }
-
-      .bumperToggle {
-        @apply(--layout-horizontal);
-        @apply(--layout-center-justified);
-        @apply(--layout-center);
-      }
-
-      .bumperToggle span {
-        padding-top: 5px;
-        padding-right: 10px;
+        height: calc(100vh - 84px);
       }
     </style>
 
-    <scouting-page name="Stand Scouting - Intro" first next="auto">
+    <scouting-page name="Stand Scouting - Intro" first next="{{next}}">
       <paper-input id="scout-name" label="Scout Name"></paper-input>
       <vaadin-combo-box-light id="" attr-for-value="value" items="[[teams]]">
         <paper-input label="Team Number" class="input" type="number" min="1" max="9999" auto-validate></paper-input>
       </vaadin-combo-box-light>
       <paper-input id="match-number" type="number" min="1" max="200" label="Match Number" auto-validate></paper-input>
-      <div class="bumperToggle">
-        <span>Bumper Color:</span>
-        <paper-toggle-button checked="{{toggled}}" id="bumperColor">[[bumperColor]]</paper-toggle-button>
+      <div class="rowContainer">
+        <toggle-element label="Bumper Color" no="BLUE" yes="RED" mode="colors"></toggle-element>
+        <toggle-element label="Showed up for match" value="{{atMatch}}"></toggle-element>
+      </div>
     </scouting-page>
-    </div>
   </template>
 
   <script>
@@ -60,21 +37,22 @@
           value: []
         },
 
-        bumperColor: {
+        next: {
           type: String,
-          value: "BLUE"
+          value: "auto"
         },
 
-        toggled: {
+        atMatch: {
           type: Boolean,
-          value: false,
-          observer: "_colorControl"
+          value: true,
+          observer: "matchHandler"
         }
       },
 
-      _colorControl: function () {
-        this.bumperColor = this.toggled ? "RED" : "BLUE";
+      matchHandler: function () {
+        this.next = this.atMatch ? "auto" : "post";
       }
+
     });
   </script>
 </dom-module>

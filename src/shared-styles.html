@@ -27,10 +27,23 @@
         @apply(--layout-center-justified);
       }
 
+      .rowContainer {
+        margin: 0px;
+        padding: 0px;
+        @apply(--layout-horizontal);
+        @apply(--layout-wrap);
+        @apply(--layout-around-justified);
+        @apply(--layout-center);
+      }
+
       h1 {
         margin: 16px 0;
         color: #212121;
         font-size: 22px;
+      }
+
+      paper-input {
+        --paper-input-container-focus-color: var(--app-primary-color);
       }
     </style>
   </template>

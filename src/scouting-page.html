@@ -8,12 +8,15 @@
       :host {
         display: block;
         padding: 0px;
+        height: 90%
       }
 
       .buttonHolder {
         padding-top: 15px;
         @apply(--layout-horizontal);
         @apply(--layout-flex);
+        @apply(--layout-justified);
+        @apply(--layout-end);
       }
 
       .nextButton {
@@ -23,6 +26,12 @@
       }
 
       .sendButton {}
+
+      .card {
+        height: 100%;
+        @apply(--layout-vertical);
+        @apply(--layout-flex);
+      }
     </style>
 
     <div class="card">
@@ -37,7 +46,6 @@
           <paper-button raised hidden="{{!last}}" on-tap="fireSubmit">Send Data</paper-button>
         </div>
       </div>
-
     </div>
   </template>
 

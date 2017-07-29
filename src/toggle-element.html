@@ -1,0 +1,96 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="toggle-element">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px 0px 10px 0px;
+      }
+
+      .holder {
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+      }
+
+      .toggle {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+        @apply(--layout-center);
+      }
+
+      span {
+        padding-top: 5px;
+        padding-right: 10px;
+      }
+
+      paper-toggle-button {
+        padding-top: 5px;
+      }
+
+      paper-toggle-button.default {
+        --paper-toggle-button-checked-bar-color: var(--app-primary-color);
+        --paper-toggle-button-checked-button-color: var(--app-primary-color);
+        --paper-toggle-button-checked-ink-color: var(--app-primary-color);
+      }
+
+      paper-toggle-button.colors {
+        --paper-toggle-button-checked-bar-color: var(--paper-red-500);
+        --paper-toggle-button-checked-button-color: var(--paper-red-500);
+        --paper-toggle-button-checked-ink-color: var(--paper-red-500);
+        --paper-toggle-button-unchecked-bar-color: var(--paper-blue-500);
+        --paper-toggle-button-unchecked-button-color: var(--paper-blue-500);
+        --paper-toggle-button-unchecked-ink-color: var(--paper-blue-500);
+      }
+    </style>
+    <div class="holder">
+      <span>{{label}}:</span>
+      <div class="toggle">
+        <paper-toggle-button checked="{{value}}" class$="{{mode}}">[[text]]</paper-toggle-button>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'toggle-element',
+      properties: {
+        yes: {
+          type: String,
+          value: "YES"
+        },
+        no: {
+          type: String,
+          value: "NO"
+        },
+
+        value: {
+          type: Boolean,
+          value: false,
+          notify: true,
+          observer: "_toggleHandler"
+        },
+
+        text: {
+          type: String,
+          value: ""
+        },
+
+        label: {
+          type: String,
+          value: "Toggle Button"
+        },
+
+        mode: {
+          type: String,
+          value: "default"
+        }
+      },
+
+      _toggleHandler: function () {
+        this.text = this.value ? this.yes : this.no;
+      }
+    });
+  </script>
+</dom-module>
