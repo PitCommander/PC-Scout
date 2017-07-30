@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="scouting-page.html">
 
@@ -10,10 +11,35 @@
         padding: 10px;
         height: calc(100vh - 84px);
       }
+
+      textarea {
+        margin-left: 0px !important;
+      }
     </style>
 
     <scouting-page name="Stand Scouting - Post" prev="tele" last>
-      <h2>End of match</h2>
+      <div class="wrappingRow">
+        <toggle-element label="Robot died" value="{{robotDied}}"></toggle-element>
+        <toggle-element id="fuel" label="Scout missed data" value="{{badData}}"></toggle-element>
+      </div>
+      <div class="wrappingRow">
+        <div class="baseRow">
+          <span> Driver Skill:</span>
+          <paper-slider min="0" max="10" pin expand editable snaps value="{{driverSkill}}"></paper-slider>
+        </div>
+        <div class="baseRow">
+          <span> Robot Skill:</span>
+          <paper-slider min="0" max="10" pin expand editable snaps value="{{robotSkill}}"></paper-slider>
+        </div>
+      </div>
+      <paper-dropdown-menu label="Cards Incurred" value="{{cards}}" dynamic-align>
+        <paper-listbox slot="dropdown-content" selected="0">
+          <paper-item>No card incurred</paper-item>
+          <paper-item>Yellow card</paper-item>
+          <paper-item>Red card</paper-item>
+        </paper-listbox>
+      </paper-dropdown-menu>
+      <paper-textarea label="Notes"></paper-textarea>
     </scouting-page>
   </template>
 
