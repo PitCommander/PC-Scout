@@ -28,13 +28,11 @@
           <paper-slider min="0" max="10" pin expand editable snaps value="{{robotSkill}}"></paper-slider>
         </div>
       </div>
-      <paper-dropdown-menu label="Cards Incurred" value="{{cards}}" dynamic-align>
-        <paper-listbox slot="dropdown-content" selected="0">
-          <paper-item>No card incurred</paper-item>
-          <paper-item>Yellow card</paper-item>
-          <paper-item>Red card</paper-item>
-        </paper-listbox>
-      </paper-dropdown-menu>
+      <button-group attr-for-selected="name" label="Cards" selected="{{cards}}">
+        <paper-button toggles name="none">None</paper-button>
+        <paper-button toggles name="yellow">Yellow</paper-button>
+        <paper-button toggles name="red">Red</paper-button>
+      </button-group>
       <paper-textarea label="Notes"></paper-textarea>
     </scouting-page>
   </template>
@@ -42,6 +40,13 @@
   <script>
     Polymer({
       is: 'post-view',
+
+      properties: {
+        cards: {
+          type: String,
+          value: "none"
+        }
+      }
     });
   </script>
 </dom-module>

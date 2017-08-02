@@ -22,10 +22,7 @@
     "iron-data-table": "Saulis/iron-data-table#^1.0.7",
     "granite-file-reader": "LostInBrittany/granite-file-reader#^1.2.1",
     "neon-animation": "PolymerElements/neon-animation#^1.2.5",
-    "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^2.0.0",
-    "paper-listbox": "PolymerElements/paper-listbox#^2.0.0",
-    "paper-item": "PolymerElements/paper-item#^2.0.0",
-    "paper-slider": "PolymerElements/paper-slider#^2.0.2"
+    "paper-slider": "PolymerElements/paper-slider#^2.0.2",
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

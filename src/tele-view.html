@@ -22,19 +22,24 @@
         <counter-element label="Fouls"></counter-element>
         <timer-element label="Climbing Time"></timer-element>
       </div>
-      <paper-dropdown-menu label="Climbing Result" value="{{climbResult}}" dynamic-align>
-        <paper-listbox slot="dropdown-content" selected="0">
-          <paper-item>Did not attempt</paper-item>
-          <paper-item>Failed</paper-item>
-          <paper-item>Success</paper-item>
-        </paper-listbox>
-      </paper-dropdown-menu>
+      <button-group attr-for-selected="name" label="Climbing" selected="{{climbing}}">
+        <paper-button toggles name="none">None</paper-button>
+        <paper-button toggles name="fail">Failed</paper-button>
+        <paper-button toggles name="success">Succeeded</paper-button>
+      </button-group>
     </scouting-page>
   </template>
 
   <script>
     Polymer({
       is: 'tele-view',
+
+      properties: {
+        climbing: {
+          type: String,
+          value: "none"
+        }
+      }
     });
   </script>
 </dom-module>

@@ -1,0 +1,72 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selectable.html">
+
+<dom-module id="button-group">
+  <template>
+    <style include="shared-styles">
+    :host {
+        display: block;
+        padding: 10px 0px 10px 10px;
+      }
+
+      :host::content paper-button {
+        min-width: 2em;
+        padding: 0px 5px 0px 5px;
+        margin: 0em;
+        min-height: 2em;
+        border-radius: 0px;
+        border-color: whitesmoke;
+        border-width: 1px;
+        border-style: solid;
+      }
+
+      :host::content paper-button[active] {
+        background: var(--app-primary-color);
+        color: white;
+      }
+
+      :host::content paper-button:first-of-type {
+        border-bottom-left-radius: 5px;
+        border-top-left-radius: 5px;
+      }
+
+      :host::content paper-button:last-of-type {
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+
+      .center {
+        border-radius: 5px;
+        border-color: whitesmoke;
+        border-width: 1px;
+        border-style: solid;
+      }
+    }
+    </style>
+
+    <div class="wrappingRow">
+      <label>{{label}}:</label>
+      <div class="center">
+        <content></content>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'button-group',
+
+      properties: {
+        label: String
+      },
+
+      behaviors: [
+            Polymer.IronSelectableBehavior
+        ],
+      ready: function () {
+        this.selectable = 'paper-button';
+        this.selectedAttribute = 'active';
+      }
+    });
+  </script>
+</dom-module>
