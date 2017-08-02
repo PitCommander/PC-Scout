@@ -63,14 +63,14 @@
         <app-toolbar>
           MENU
         </app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="front" href="/front">Front Page</a>
-          <a name="stand" href="/stand">Stand Scout</a>
-          <a name="pit-intro" href="/pit-intro">Pit Scout</a>
-          <a name="data" href="/data">Scouting Data</a>
-          <a name="schedule" href="/schedule">Match Schedule</a>
-          <a name="pit" href="/pit">Pit Status</a>
-          <a name="chat" href="/chat">Chat</a>
+        <iron-selector attr-for-selected="name" selected="[[page]]" class="drawer-list">
+          <a tabindex="-1" name="front" href="/front">Front Page</a>
+          <a tabindex="-1" name="stand" href="/stand">Stand Scout</a>
+          <a tabindex="-1" name="pit-intro" href="/pit-intro">Pit Scout</a>
+          <a tabindex="-1" name="data" href="/data">Scouting Data</a>
+          <a tabindex="-1" name="schedule" href="/schedule">Match Schedule</a>
+          <a tabindex="-1" name="pit" href="/pit">Pit Status</a>
+          <a tabindex="-1" name="chat" href="/chat">Chat</a>
         </iron-selector>
       </app-drawer>
 
