@@ -1,5 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/iron-selector/iron-selectable.html">
+<link rel="import" href="../bower_components/iron-selector/iron-multi-selectable.html">
 
 <dom-module id="button-group">
   <template>
@@ -57,11 +57,12 @@
       is: 'button-group',
 
       properties: {
-        label: String
+        label: String,
+        multi: Boolean,
       },
 
       behaviors: [
-            Polymer.IronSelectableBehavior
+            Polymer.IronMultiSelectableBehavior
         ],
       ready: function () {
         this.selectable = 'paper-button';

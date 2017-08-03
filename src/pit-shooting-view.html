@@ -1,0 +1,79 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="scouting-page.html">
+<link rel="import" href="toggle-element.html">
+<link rel="import" href="button-group.html">
+
+<dom-module id="pit-shooting-view">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+        height: calc(100vh - 84px);
+      }
+    </style>
+
+    <scouting-page name="Pit Scouting - Shooting" prev="pit-intro" next="pit-gears">
+      <button-group attr-for-selected="name" label="Shooting" multi selected-values="{{shootingTarget}}" selected-items="{{memes}}">
+        <paper-button toggles name="none">None</paper-button>
+        <paper-button toggles name="low">Low</paper-button>
+        <paper-button toggles name="high">High</paper-button>
+      </button-group>
+      <template is="dom-if" if="[[canShoot]]">
+        <div class="wrappingRow">
+          <span>Shot Accuracy:</span>
+          <paper-slider min="0" max="100" pin expand editable value="{{shotAccuracy}}"></paper-slider>
+          <span>Shot Accuracy:</span>
+          <paper-slider min="0" max="100" pin expand editable value="{{shotAccuracy}}"></paper-slider>
+          <span>Shot Accuracy:</span>
+          <paper-slider min="0" max="100" pin expand editable value="{{shotAccuracy}}"></paper-slider>
+        </div>
+        <button-group attr-for-selected="name" label="Auto Goal" selected="{{autoGoal}}">
+          <paper-button toggles name="none">None</paper-button>
+          <paper-button toggles name="left">Low</paper-button>
+          <paper-button toggles name="center">High</paper-button>
+        </button-group>
+      </template>
+    </scouting-page>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'pit-shooting-view',
+
+      properties: {
+        shootingTarget: {
+          type: Array,
+          value: ["none"]
+        },
+        shotAccuracy: Number,
+        autoGoal: String,
+        autoShots: Boolean,
+        memes: Array
+      },
+
+      observers: [
+        "_multiHandler(shootingTarget.splices)"
+      ],
+
+      _multiHandler: function (multiData) {
+        if (multiData) {
+          var nonePos = this.shootingTarget.indexOf("none");
+          var splicePos = multiData.indexSplices[0].index;
+
+          console.log(nonePos)
+          console.log(splicePos);
+          var len = this.shootingTarget.length;
+
+          if (nonePos === splicePos) {
+            this.set(this.shootingTarget, ["none"]);
+          } else if (nonePos > -1 && len > 1) {
+            this.set(this.shootingTarget, this.shootingTarget.splice(nonePos, 1));
+          }
+        }
+      }
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,33 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="scouting-page.html">
+
+<dom-module id="pit-gears-view">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+        height: calc(100vh - 84px);
+      }
+    </style>
+
+    <scouting-page name="Pit Scouting - Gears" prev="pit-shooting" next="pit-specs">
+      Actual robot specifications go here.
+    </scouting-page>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'pit-gears-view',
+
+      properties: {
+        wheels: Number,
+        driveType: String,
+        maxSpeed: String,
+        wheels: String,
+        gearbox: String,
+      },
+    });
+  </script>
+</dom-module>
