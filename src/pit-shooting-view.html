@@ -7,11 +7,11 @@
 <dom-module id="pit-shooting-view">
   <template>
     <style include="shared-styles">
-     :host {
-      display: block;
-      padding: 10px;
-      height: calc(100vh - 84px);
-    }
+      :host {
+        display: block;
+        padding: 10px;
+        height: calc(100vh - 84px);
+      }
     </style>
     <scouting-page name="Pit Scouting - Shooting" prev="pit-intro" next="pit-gears">
       <button-group attr-for-selected="name" label="Shooting" multi selected-values="{{shootingTarget}}" selected-items="{{memes}}">
@@ -37,46 +37,45 @@
     </scouting-page>
   </template>
   <script>
-  Polymer({
-    is: 'pit-shooting-view',
+    Polymer({
+      is: 'pit-shooting-view',
 
-    properties: {
-      shootingTarget: {
-        type: Array,
-        value: ["none"],
-        notify: true
+      properties: {
+        shootingTarget: {
+          type: Array,
+          value: ["none"],
+          notify: true
+        },
+        canShoot: Boolean,
+        shotAccuracy: Number,
+        autoGoal: String,
+        autoShots: Boolean,
+        memes: Array
       },
-      shotAccuracy: Number,
-      autoGoal: String,
-      autoShots: Boolean,
-      memes: Array
-    },
 
-    observers: [
+      observers: [
       "_multiHandler(shootingTarget.splices)"
     ],
 
-    _multiHandler: function(multiData) {
-      if (multiData) {
-        var nonePos = this.shootingTarget.indexOf("none");
-        var lowPos = this.shootingTarget.indexOf("low");
-        var highPos = this.shootingTarget.indexOf("high");
-        var len = this.shootingTarget.length;
+      _multiHandler: function (multiData) {
+        if (multiData) {
+          var nonePos = this.shootingTarget.indexOf("none");
+          var lowPos = this.shootingTarget.indexOf("low");
+          var highPos = this.shootingTarget.indexOf("high");
+          var len = this.shootingTarget.length;
 
-        if (nonePos === 0 && len > 1) {
-          this.set(this.shootingTarget, this.shootingTarget.splice(nonePos, 1));
-          this.notifySplices('shootingTarget', [{
-            index: 0,
-            removed: [{
-              name: 'none'
-            }],
-            addedCount: 0,
-            obect: this.shootingTarget,
-            type: 'splice'
-          }]);
+          if (nonePos > 0 || len === 0) {
+            this.canShoot = false;
+            this.arrayDelete("shootingTarget", "low")
+            this.arrayDelete("shootingTarget", "high")
+          }
+
+          if (nonePos === 0 && len > 1) {
+            this.arrayDelete("shootingTarget", "none")
+            this.canShoot = true;
+          }
         }
       }
-    }
-  });
+    });
   </script>
 </dom-module>
