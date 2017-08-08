@@ -14,25 +14,33 @@
       }
     </style>
     <scouting-page name="Pit Scouting - Shooting" prev="pit-intro" next="pit-gears">
-      <button-group attr-for-selected="name" label="Shooting" multi selected-values="{{shootingTarget}}" selected-items="{{memes}}">
-        <paper-button toggles name="none">None</paper-button>
-        <paper-button toggles name="low">Low</paper-button>
-        <paper-button toggles name="high">High</paper-button>
-      </button-group>
+      <div class="center">
+        <button-group attr-for-selected="name" label="Shooting" multi selected-values="{{shootingTarget}}">
+          <paper-button toggles name="none">None</paper-button>
+          <paper-button toggles name="low">Low</paper-button>
+          <paper-button toggles name="high">High</paper-button>
+        </button-group>
+      </div>
+      <div class="center">
+        <template is="dom-if" if="[[canShoot]]">
+          <button-group attr-for-selected="name" label="Auto Goal" multi selected-values="{{autoGoal}}">
+            <paper-button toggles name="none">None</paper-button>
+            <paper-button toggles name="low">Low</paper-button>
+            <paper-button toggles name="high">High</paper-button>
+          </button-group>
+        </template>
+      </div>
       <template is="dom-if" if="[[canShoot]]">
         <div class="wrappingRow">
           <span>Shot Accuracy:</span>
           <paper-slider min="0" max="100" pin expand editable value="{{shotAccuracy}}"></paper-slider>
-          <span>Shot Accuracy:</span>
-          <paper-slider min="0" max="100" pin expand editable value="{{shotAccuracy}}"></paper-slider>
-          <span>Shot Accuracy:</span>
-          <paper-slider min="0" max="100" pin expand editable value="{{shotAccuracy}}"></paper-slider>
+          <span>Teleop shots:</span>
+          <paper-slider min="0" max="300" pin expand editable value="{{shotAccuracy}}"></paper-slider>
+          <template is="dom-if" if="[[autoShoot]]">
+            <span>Auto shots:</span>
+            <paper-slider min="0" max="60" pin expand editable value="{{autoShots}}"></paper-slider>
+          </template>
         </div>
-        <button-group attr-for-selected="name" label="Auto Goal" selected="{{autoGoal}}">
-          <paper-button toggles name="none">None</paper-button>
-          <paper-button toggles name="left">Low</paper-button>
-          <paper-button toggles name="center">High</paper-button>
-        </button-group>
       </template>
     </scouting-page>
   </template>
@@ -48,39 +56,46 @@
         },
         canShoot: Boolean,
         shotAccuracy: Number,
-        autoGoal: String,
-        autoShots: Boolean,
-        memes: Array
+        autoGoal: {
+          type: Array,
+          value: ["none"],
+          notify: true
+        },
+        autoShots: Number,
+        autoShoot: Boolean
       },
 
       observers: [
-      "_multiHandler(shootingTarget.splices)"
+      "_multiHandler(shootingTarget.splices, 'shootingTarget', 'canShoot')",
+      "_multiHandler(autoGoal.splices, 'autoGoal', 'autoShoot')"
     ],
 
-      _multiHandler: function (multiData) {
+      _multiHandler: function (multiData, propertyName, targetName) {
+        var propertyData = this.get(propertyName);
+
         if (multiData) {
-          var nonePos = this.shootingTarget.indexOf("none");
-          var len = this.shootingTarget.length;
+          var nonePos = propertyData.indexOf("none");
+          var len = propertyData.length;
 
           if (len === 0) {
-            this.canShoot = false;
+            this.set(targetName, false);
           }
 
           if (len === 1) {
             if (nonePos > -1) {
-              this.canShoot = false;
+              this.set(targetName, false);
 
             } else {
-              this.canShoot = true;
+              this.set(targetName, true);
             }
           }
 
           if (len > 1) {
             if (nonePos < 1) {
-              this.arrayDelete("shootingTarget", "none")
+              this.arrayDelete(propertyName, "none");
             } else if (nonePos > 0) {
-              this.arrayDelete("shootingTarget", "low")
-              this.arrayDelete("shootingTarget", "high")
+              this.arrayDelete(propertyName, "low");
+              this.arrayDelete(propertyName, "high");
             }
           }
         }
