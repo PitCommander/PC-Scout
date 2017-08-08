@@ -60,19 +60,28 @@
       _multiHandler: function (multiData) {
         if (multiData) {
           var nonePos = this.shootingTarget.indexOf("none");
-          var lowPos = this.shootingTarget.indexOf("low");
-          var highPos = this.shootingTarget.indexOf("high");
           var len = this.shootingTarget.length;
 
-          if (nonePos > 0 || len === 0) {
+          if (len === 0) {
             this.canShoot = false;
-            this.arrayDelete("shootingTarget", "low")
-            this.arrayDelete("shootingTarget", "high")
           }
 
-          if (nonePos === 0 && len > 1) {
-            this.arrayDelete("shootingTarget", "none")
-            this.canShoot = true;
+          if (len === 1) {
+            if (nonePos > -1) {
+              this.canShoot = false;
+
+            } else {
+              this.canShoot = true;
+            }
+          }
+
+          if (len > 1) {
+            if (nonePos < 1) {
+              this.arrayDelete("shootingTarget", "none")
+            } else if (nonePos > 0) {
+              this.arrayDelete("shootingTarget", "low")
+              this.arrayDelete("shootingTarget", "high")
+            }
           }
         }
       }
