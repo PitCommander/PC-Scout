@@ -12,8 +12,11 @@
       }
     </style>
 
-    <scouting-page name="Pit Scouting - Gears" prev="pit-shooting" next="pit-specs">
-      Actual robot specifications go here.
+    <scouting-page name="Pit Scouting - Gears" prev="pit-shooting" next="pit-match">
+      <toggle-element label="Gear scoring" value="{{canGear}}"></toggle-element>
+      <template is="dom-if" if="[[canGear]]">
+        <toggle-element label="Gear Mech" value="{{gearScoring}}" no="Passive" yes="Active"></toggle-element>
+      </template>
     </scouting-page>
   </template>
 
@@ -22,11 +25,7 @@
       is: 'pit-gears-view',
 
       properties: {
-        wheels: Number,
-        driveType: String,
-        maxSpeed: String,
-        wheels: String,
-        gearbox: String,
+        canGear: Boolean
       },
     });
   </script>

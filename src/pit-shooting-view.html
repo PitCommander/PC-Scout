@@ -32,13 +32,15 @@
       </div>
       <template is="dom-if" if="[[canShoot]]">
         <div class="wrappingRow">
+          <span>Ball capacity:</span>
+          <paper-slider min="0" max="150" step="5" pin expand editable value="{{ballHolding}}"></paper-slider>
           <span>Shot Accuracy:</span>
-          <paper-slider min="0" max="100" pin expand editable value="{{shotAccuracy}}"></paper-slider>
+          <paper-slider min="0" max="100" step="5" pin expand editable value="{{shotAccuracy}}"></paper-slider>
           <span>Teleop shots:</span>
-          <paper-slider min="0" max="300" pin expand editable value="{{shotAccuracy}}"></paper-slider>
+          <paper-slider min="0" max="300" step="10" pin expand editable value="{{teleShots}}"></paper-slider>
           <template is="dom-if" if="[[autoShoot]]">
             <span>Auto shots:</span>
-            <paper-slider min="0" max="60" pin expand editable value="{{autoShots}}"></paper-slider>
+            <paper-slider min="0" max="60" step="5" pin expand editable value="{{autoShots}}"></paper-slider>
           </template>
         </div>
       </template>
@@ -62,7 +64,8 @@
           notify: true
         },
         autoShots: Number,
-        autoShoot: Boolean
+        autoShoot: Boolean,
+        teleShots: Number
       },
 
       observers: [
