@@ -65,13 +65,25 @@
         },
         autoShots: Number,
         autoShoot: Boolean,
-        teleShots: Number
+        teleShots: Number,
+        ballHolding: Number
       },
 
       observers: [
       "_multiHandler(shootingTarget.splices, 'shootingTarget', 'canShoot')",
       "_multiHandler(autoGoal.splices, 'autoGoal', 'autoShoot')"
-    ],
+      ],
+
+      reset: function () {
+        this.shootingTarget = ["none"];
+        this.canShoot = false;
+        this.shotAccuracy = 0;
+        this.autoGoal = ["none"];
+        this.autoShots = 0;
+        this.autoShoot = false;
+        this.teleShots = 0;
+        this.ballHolding = 0;
+      },
 
       _multiHandler: function (multiData, propertyName, targetName) {
         var propertyData = this.get(propertyName);

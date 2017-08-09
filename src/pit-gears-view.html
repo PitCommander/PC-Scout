@@ -13,9 +13,26 @@
     </style>
 
     <scouting-page name="Pit Scouting - Gears" prev="pit-shooting" next="pit-match">
-      <toggle-element label="Gear scoring" value="{{canGear}}"></toggle-element>
-      <template is="dom-if" if="[[canGear]]">
-        <toggle-element label="Gear Mech" value="{{gearScoring}}" no="Passive" yes="Active"></toggle-element>
+      <div class="center">
+        <button-group attr-for-selected="name" label="Gear Scoring" selected="{{gearType}}">
+          <paper-button toggles name="none">None</paper-button>
+          <paper-button toggles name="passive">Passive</paper-button>
+          <paper-button toggles name="active">Active</paper-button>
+        </button-group>
+      </div>
+      <template is="dom-if" if="[[_canGear(gearType)]]">
+        <div class="wrappingRow">
+          <button-group attr-for-selected="name" label="Auto Gear" multi selected-values="{{autoGear}}">
+            <paper-button toggles name="none">None</paper-button>
+            <paper-button toggles name="left">Left</paper-button>
+            <paper-button toggles name="center">Center</paper-button>
+            <paper-button toggles name="right">Right</paper-button>
+            <paper-button toggles name="double">2X</paper-button>
+          </button-group>
+          <toggle-element label="Ground Pickup" value="{{groundPickup}}"></toggle-element>
+          <span>Cycles per match:</span>
+          <paper-slider min="0" max="10" step="1" pin expand editable value="{{teleGears}}"></paper-slider>
+        </div>
       </template>
     </scouting-page>
   </template>
@@ -25,8 +42,67 @@
       is: 'pit-gears-view',
 
       properties: {
-        canGear: Boolean
+        canGear: Boolean,
+        gearType: {
+          type: String,
+          value: "none"
+        },
+        autoGear: {
+          type: Array,
+          value: ["none"]
+        },
+        groundPickup: Boolean,
+        teleGears: Number
       },
+
+      observers: [
+      "_multiHandler(autoGear.splices, 'autoGear', ' ')",
+      ],
+
+      reset: function () {
+        this.canGear = false;
+        this.gearType = "none";
+        this.autoGear = ["none"];
+        this.groundPickup = false;
+        this.teleGears = 0;
+      },
+
+      _canGear: function (gearType) {
+        return gearType === "passive" || gearType === "active"
+      },
+
+      _multiHandler: function (multiData, propertyName, targetName) {
+        var propertyData = this.get(propertyName);
+
+        if (multiData) {
+          var nonePos = propertyData.indexOf("none");
+          var len = propertyData.length;
+
+          if (len === 0) {
+            this.set(targetName, false);
+          }
+
+          if (len === 1) {
+            if (nonePos > -1) {
+              this.set(targetName, false);
+
+            } else {
+              this.set(targetName, true);
+            }
+          }
+
+          if (len > 1) {
+            if (nonePos < 1) {
+              this.arrayDelete(propertyName, "none");
+            } else if (nonePos > 0) {
+              this.arrayDelete(propertyName, "left");
+              this.arrayDelete(propertyName, "center");
+              this.arrayDelete(propertyName, "right");
+              this.arrayDelete(propertyName, "double");
+            }
+          }
+        }
+      }
     });
   </script>
 </dom-module>
