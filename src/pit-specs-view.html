@@ -83,6 +83,19 @@
         this.highSpeed = 0;
         this.robotWeight = 0;
         this.otherVal = "";
+      },
+
+      sendData: function () {
+        var specsInfo = {
+          "drivetrain": this.drivetrain,
+          "shifting": this.shifting,
+          "lowspeed": this.lowSpeed,
+          "highSpeed": this.highSpeed,
+          "robotWeight": this.robotWeight,
+          "driveInfo": this.otherVal
+        };
+
+        return specsInfo;
       }
     });
   </script>

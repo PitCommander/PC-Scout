@@ -48,6 +48,16 @@
         this.roles = [];
         this.canClimb = false;
         this.climbingTime = 0;
+      },
+
+      sendData: function () {
+        var matchInfo = {
+          "roles": this.roles,
+          "canClimb": this.canClimb,
+          "climbingTime": this.climbingTime
+        };
+
+        return matchInfo;
       }
     });
   </script>

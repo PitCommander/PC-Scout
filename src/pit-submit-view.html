@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="scouting-page.html">
 
@@ -13,7 +14,7 @@
     </style>
 
     <scouting-page name="Pit Scouting - Submit" prev="pit-picture" last>
-      Final thoughts, etc go here.
+      <paper-textarea label="Notes" value="{{teamNotes}}"></paper-textarea>
     </scouting-page>
   </template>
 
@@ -21,6 +22,19 @@
     Polymer({
       is: 'pit-submit-view',
 
+      properties: {
+        teamNotes: String,
+        pitPages: {
+          type: Array,
+          value: ['pit-intro-view',
+                  'pit-shooting-view',
+                  'pit-gears-view',
+                  'pit-match-view',
+                  'pit-specs-view',
+                  'pit-picture-view',
+                  'pit-submit-view']
+        }
+      },
       listeners: {
         'scouting-submit': 'logSubmit'
       },
@@ -35,20 +49,12 @@
       },
 
       reset: function () {
-
+        this.teamNotes = "";
       },
 
       resetPitScout: function () {
         var app = document.querySelector('scout-app');
-        var pitPages = ['pit-intro-view',
-                        'pit-shooting-view',
-                        'pit-gears-view',
-                        'pit-match-view',
-                        'pit-specs-view',
-                        'pit-picture-view',
-                        'pit-submit-view']
-
-        pitPages.forEach(function (item) {
+        this.pitPages.forEach(function (item) {
           var page = document.querySelector(item);
           page.reset()
         });

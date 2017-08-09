@@ -32,6 +32,15 @@
       reset: function () {
         this.scoutName = ""
         this.teamNumber = ""
+      },
+
+      sendData: function () {
+        var pitIntro = {
+          "scoutName": this.scoutName,
+          "teamNumber": this.teamNumber
+        };
+
+        return pitIntro;
       }
     });
   </script>

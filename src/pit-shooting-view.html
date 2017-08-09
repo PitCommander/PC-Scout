@@ -114,6 +114,21 @@
             }
           }
         }
+      },
+
+      sendData: function () {
+        var shootingInfo = {
+          "canShoot": this.canShoot,
+          "shootingTargets": this.shootingTarget,
+          "shotAcuracy": this.shotAccuracy,
+          "autoShoot": this.autoShoot,
+          "autoGoal": this.autoGoal,
+          "autoShots": this.autoShots,
+          "teleShots": this.teleShots,
+          "ballHolding": this.ballHolding
+        };
+
+        return shootingInfo;
       }
     });
   </script>

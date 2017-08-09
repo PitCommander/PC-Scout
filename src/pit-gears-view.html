@@ -59,14 +59,6 @@
       "_multiHandler(autoGear.splices, 'autoGear', ' ')",
       ],
 
-      reset: function () {
-        this.canGear = false;
-        this.gearType = "none";
-        this.autoGear = ["none"];
-        this.groundPickup = false;
-        this.teleGears = 0;
-      },
-
       _canGear: function (gearType) {
         return gearType === "passive" || gearType === "active"
       },
@@ -102,6 +94,25 @@
             }
           }
         }
+      },
+
+      reset: function () {
+        this.canGear = false;
+        this.gearType = "none";
+        this.autoGear = ["none"];
+        this.groundPickup = false;
+        this.teleGears = 0;
+      },
+
+      sendData: function () {
+        var gearsInfo = {
+          "canGear": this.canGear,
+          "autoGear": this.autoGear,
+          "groundPickup": this.groundPickup,
+          "gearCycles": this.teleGears
+        };
+
+        return gearsInfo;
       }
     });
   </script>
