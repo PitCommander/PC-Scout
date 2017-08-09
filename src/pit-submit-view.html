@@ -34,17 +34,26 @@
         }
       },
 
+      reset: function () {
+
+      },
+
       resetPitScout: function () {
         var app = document.querySelector('scout-app');
-        var pitIntro = document.querySelector('pit-intro-view');
-        var pitStrat = document.querySelector('pit-strat-view');
-        var pitSpecs = document.querySelector('pit-specs-view');
-        var pitPic = document.querySelector('pit-picture-view');
-        var pitSubmit = document.querySelector('pit-submit-view');
+        var pitPages = ['pit-intro-view',
+                        'pit-shooting-view',
+                        'pit-gears-view',
+                        'pit-match-view',
+                        'pit-specs-view',
+                        'pit-picture-view',
+                        'pit-submit-view']
 
-        app.page = "pit-intro"
-        pitIntro.$.scoutName.value = "";
-        pitIntro.$.teamNumber.value = "";
+        pitPages.forEach(function (item) {
+          var page = document.querySelector(item);
+          page.reset()
+        });
+
+        app.page = "pit-intro";
       },
 
       sendPitScout: function () {

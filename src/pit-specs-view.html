@@ -13,7 +13,34 @@
     </style>
 
     <scouting-page name="Pit Scouting - Specs" prev="pit-match" next="pit-picture">
-      Actual robot specifications go here.
+      <div class="center">
+        <span>Robot Weight:</span>
+        <paper-slider min="0" max="120" step="1" pin expand editable value="{{robotWeight}}"></paper-slider>
+      </div>
+      <button-group attr-for-selected="name" label="Drive" selected="{{drivetrain}}">
+        <paper-button toggles name="4WD">4 Wheel</paper-button>
+        <paper-button toggles name="6WD">6 Wheel</paper-button>
+        <paper-button toggles name="8WD">8 Wheel</paper-button>
+        <paper-button toggles name="swerve">Swerve</paper-button>
+        <paper-button toggles name="mecanum">Mecanum</paper-button>
+        <paper-button toggles name="other">Other</paper-button>
+      </button-group>
+      <template is="dom-if" if="[[_checkOther(drivetrain)]]">
+        <paper-input value="{{otherVal}}" label="Drive details:"></paper-input>
+      </template>
+      <div class="wrappingRow">
+        <toggle-element label="Shifting" value="{{shifting}}"></toggle-element>
+        <div class="center">
+          <span>[[lowLabel]] FPS:</span>
+          <paper-slider min="0" max="20" step="1" pin expand editable value="{{lowSpeed}}"></paper-slider>
+        </div>
+        <div class="center">
+          <template is="dom-if" if="[[shifting]]">
+            <span>High FPS:</span>
+            <paper-slider min="0" max="20" step="1" pin expand editable value="{{highSpeed}}"></paper-slider>
+          </template>
+        </div>
+      </div>
     </scouting-page>
   </template>
 
@@ -22,12 +49,41 @@
       is: 'pit-specs-view',
 
       properties: {
-        wheels: Number,
-        driveType: String,
-        maxSpeed: String,
-        wheels: String,
-        gearbox: String,
+        drivetrain: {
+          type: String,
+          value: "6WD"
+        },
+        shifting: Boolean,
+        lowSpeed: Number,
+        highSpeed: Number,
+        otherVal: String,
+        robotWeight: Number,
+        lowLabel: {
+          type: String,
+          value: "Drive"
+        }
       },
+
+      observers: [
+        "_shiftHandler(shifting)"
+        ],
+
+      _shiftHandler: function (shifting) {
+        this.lowLabel = shifting ? "Low" : "Drive";
+      },
+
+      _checkOther: function (drive) {
+        return drive === "other";
+      },
+
+      reset: function () {
+        this.drivetrain = "6WD";
+        this.shifting = false;
+        this.lowSpeed = 0;
+        this.highSpeed = 0;
+        this.robotWeight = 0;
+        this.otherVal = "";
+      }
     });
   </script>
 </dom-module>

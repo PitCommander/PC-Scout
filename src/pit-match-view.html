@@ -13,13 +13,42 @@
     </style>
 
     <scouting-page name="Pit Scouting - Match" prev="pit-gears" next="pit-specs">
-      Team strategy information should go here.
+      <div class="center">
+        <button-group attr-for-selected="name" label="Preferred Roles" multi selected-values="{{roles}}">
+          <paper-button toggles name="defense">Defense</paper-button>
+          <paper-button toggles name="shooting">Shooting</paper-button>
+          <paper-button toggles name="gears">Gears</paper-button>
+        </button-group>
+      </div>
+      <div class="wrappingRow">
+        <div class="center">
+          <toggle-element label="Climbing" value="{{canClimb}}"></toggle-element>
+        </div>
+        <div class="baseRow">
+          <template is="dom-if" if="[[canClimb]]">
+            <span>Climbing Time:</span>
+            <paper-slider min="0" max="30" step="1" pin expand editable value="{{climbingTime}}"></paper-slider>
+          </template>
+        </div>
+      </div>
     </scouting-page>
   </template>
 
   <script>
     Polymer({
       is: 'pit-match-view',
+
+      properties: {
+        roles: Array,
+        canClimb: Boolean,
+        climbingTime: Number
+      },
+
+      reset: function () {
+        this.roles = [];
+        this.canClimb = false;
+        this.climbingTime = 0;
+      }
     });
   </script>
 </dom-module>
