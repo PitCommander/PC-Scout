@@ -40,7 +40,6 @@
       },
       logSubmit: function (e) {
         var type = e.detail.name.indexOf("Pit") != -1 ? "PIT" : "STAND";
-        console.log(type);
 
         if (type === "PIT") {
           this.sendPitScout();
@@ -62,8 +61,30 @@
         app.page = "pit-intro";
       },
 
+      sendData: function () {
+        var notesInfo = {
+          "notes": this.teamNotes
+        };
+
+        return notesInfo;
+      },
       sendPitScout: function () {
-        console.log("sending data");
+        var dataArray = [];
+        this.pitPages.forEach(function (item) {
+          dataArray.push(document.querySelector(item).sendData())
+        });
+
+        var dataPacket = {
+          "intro": dataArray[0],
+          "shooting": dataArray[1],
+          "gears": dataArray[2],
+          "match": dataArray[3],
+          "specs": dataArray[4],
+          "picture": dataArray[5],
+          "notes": dataArray[6]
+        };
+        console.log(dataPacket)
+        return dataPacket;
       }
     });
   </script>

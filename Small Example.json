@@ -1,0 +1,40 @@
+{
+  "intro": {
+    "scoutName": "Preston",
+    "teamNumber": "401"
+  },
+  "shooting": {
+    "canShoot": true,
+    "shootingTargets": ["high"],
+    "shotAcuracy": 25,
+    "autoShoot": true,
+    "autoGoal": ["high"],
+    "autoShots": 5,
+    "teleShots": 10,
+    "ballHolding": 75
+  },
+  "gears": {
+    "autoGear": ["left", "center", "right"],
+    "groundPickup": false,
+    "gearCycles": 4
+  },
+  "match": {
+    "roles": ["gears"],
+    "canClimb": true,
+    "climbingTime": 10
+  },
+  "specs": {
+    "drivetrain": "other",
+    "shifting": true,
+    "lowspeed": 7,
+    "highSpeed": 14,
+    "robotWeight": 120,
+    "driveInfo": "Octocanum"
+  },
+  "picture": {
+    "picture": "BIIIIG dataURL go here"
+  },
+  "notes": {
+    "notes": "Wowie, if the brogrammers were only any gud at anything this robot could have won. But the stoopid programmeres are too obsessed with stacklights instead... SAD!"
+  }
+}

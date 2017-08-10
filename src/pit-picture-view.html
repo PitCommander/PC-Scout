@@ -106,6 +106,7 @@
 
         var max = this.$.card.offsetWidth - 40;
         this.scaleImage(this.image, max, max, this.drawImage);
+        this.prepData();
       },
 
       scaleImage: function (data, maxWidth, maxHeight, callback) {
@@ -158,38 +159,36 @@
         var ctx = canvas.getContext("2d");
         var image = new Image;
 
-        var angle = (this.angle + degrees) % 360;
-        if (angle === -90) {
-          angle = 270;
+        if (degrees === -90) {
+          degrees = 270;
         }
 
         image.onload = function () {
 
-          switch (angle) {
+          switch (degrees) {
             default:
             case 0:
               canvas.width = image.width;
             canvas.height = image.height;
-            ctx.rotate(angle * Math.PI / 180);
+            ctx.rotate(degrees * Math.PI / 180);
             ctx.drawImage(image, 0, 0);
             break;
           case 90:
               canvas.width = image.height;
             canvas.height = image.width;
-            ctx.rotate(angle * Math.PI / 180);
+            ctx.rotate(degrees * Math.PI / 180);
             ctx.drawImage(image, 0, -image.height);
             break;
           case 180:
               canvas.width = image.width;
             canvas.height = image.height;
-            ctx.rotate(angle * Math.PI / 180);
+            ctx.rotate(degrees * Math.PI / 180);
             ctx.drawImage(image, -image.width, -image.height);
             break;
           case 270:
-            case -90:
               canvas.width = image.height;
             canvas.height = image.width;
-            ctx.rotate(angle * Math.PI / 180);
+            ctx.rotate(degrees * Math.PI / 180);
             ctx.drawImage(image, -image.width, 0);
             break;
           }
@@ -199,11 +198,21 @@
       },
 
       rotateLeft: function () {
+        if (this.angle === 0) {
+          this.angle = 270;
+        } else {
+          this.angle = this.angle - 90;
+        }
+
         this.rotateImage(this.scaledData, -90, this.drawImage);
+        this.prepData();
       },
 
       rotateRight: function () {
+        this.angle = (this.angle + 90) % 360;
+
         this.rotateImage(this.scaledData, 90, this.drawImage);
+        this.prepData();
       },
 
       downSampleImage: function (data, quality, callback) {
@@ -232,7 +241,10 @@
       },
 
       sendData: function () {
-
+        var picInfo = {
+          "picture": this.finalData
+        }
+        return picInfo;
       },
 
       reset: function () {
@@ -257,8 +269,6 @@
           canvas.height = this.naturalHeight;
 
           canvas.getContext('2d').drawImage(this, 0, 0);
-
-          // ... or get as Data URI
           callback(canvas.toDataURL('image/png'));
         };
 
